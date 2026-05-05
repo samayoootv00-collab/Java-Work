@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O-Level Student Management System</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h1>O-Level Student Management System</h1>
+    <h3>Vivian Mashaka Mwaliba (CA/Dist/25/12072)</h3>
+
+    <!-- Register Form -->
+    <form id="registerForm">
+        <input id="name" placeholder="Name" required>
+        <input id="id" placeholder="Student ID" required>
+        <select id="gender">
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+        <input id="age" type="number" placeholder="Age" required>
+        <select id="form">
+            <option value="1">Form 1</option>
+            <option value="2">Form 2</option>
+            <option value="3">Form 3</option>
+            <option value="4">Form 4</option>
+        </select>
+        <button type="submit">Register</button>
+    </form>
+
+    <!-- Students Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Form</th>
+                <th>Average</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="studentList"></tbody>
+    </table>
+
+    <script>
+        let students = [];
+        document.getElementById('registerForm').onsubmit = (e) => {
+            e.preventDefault();
+            let s = {
+                id: document.getElementById('id').value,
+                name: document.getElementById('name').value,
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value,
+                form: document.getElementById('form').value,
+                performance: []
+            };
+            students.push(s);
+            displayStudents();
+        };
+
+        function displayStudents() {
+            let list = document.getElementById('studentList');
+            list.innerHTML = '';
+            students.forEach((s) => {
+                list.innerHTML += `
+                    <tr>
+                        <td>${s.id}</td>
+                        <td>${s.name}</td>
+                        <td>${s.form}</td>
+                        <td>0</td>
+                        <td>
+                            <button onclick="view('${s.id}')">View</button>
+                            <button onclick="del('${s.id}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function view(id) { alert('View: ' + id); }
+        function del(id) { students = students.filter(s => s.id !== id); displayStudents(); }
+    </script>
+</body>
+</html>
